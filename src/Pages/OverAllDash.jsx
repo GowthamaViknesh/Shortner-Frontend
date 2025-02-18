@@ -78,7 +78,6 @@ const OverallDash = () => {
   const handleCopy = async (url) => {
     try {
       await navigator.clipboard.writeText(url);
-      console.log("URL copied to clipboard");
     } catch (err) {
       console.error("Failed to copy URL:", err);
     }
@@ -167,12 +166,14 @@ const OverallDash = () => {
                   <td className="px-2 py-2 truncate">{url.longUrl}</td>
                   <td className="px-2 py-2">
                     <div className="flex items-center gap-1">
-                      <button
-                        onClick={() => handleRedirect(url.customAlias)}
+                      <a
+                        href={url.shortUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-blue-600 hover:text-blue-800 underline"
                       >
                         {url.shortUrl}
-                      </button>
+                      </a>
                       <button
                         onClick={() => handleCopy(url.shortUrl)}
                         className="text-gray-600 hover:text-blue-600"

@@ -68,15 +68,9 @@ const Reports = () => {
     }
   };
 
-  console.log(data);
-
-  // Extract unique topics and URLs from data
   const topics = [...new Set(data.map((item) => item.topic))];
   const urls = [...new Set(data.map((item) => item.customAlias))];
 
-  console.log(urls);
-
-  // Prepare chart data
   let chartData = [];
 
   if (selectedTopic && topicData) {
