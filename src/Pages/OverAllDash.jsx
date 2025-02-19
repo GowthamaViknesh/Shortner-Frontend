@@ -1,11 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link, Trash2, Copy } from "lucide-react";
-import {
-  createUrl,
-  deleteUrlData,
-  overAllDashData,
-  redirectOriginalUrl,
-} from "../apis/api";
+import { createUrl, deleteUrlData, overAllDashData } from "../apis/api";
 
 const OverallDash = () => {
   const [longUrl, setLongUrl] = useState("");
@@ -59,19 +54,6 @@ const OverallDash = () => {
       }
     } catch (error) {
       console.error("Error deleting URL:", error);
-    }
-  };
-
-  const handleRedirect = async (alias) => {
-    try {
-      const response = await redirectOriginalUrl(alias);
-      if (response) {
-        window.open(response, "_blank");
-      } else {
-        console.error("Invalid response format:", response);
-      }
-    } catch (error) {
-      console.error("Error redirecting to URL:", error);
     }
   };
 

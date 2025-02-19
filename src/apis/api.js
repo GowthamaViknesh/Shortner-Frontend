@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:4123/api/auth";
-const URL = "http://localhost:4123/api";
+const API_URL = "https://the-alter-office.onrender.com/api/auth";
+const URL = "https://the-alter-office.onrender.com/api";
 
 export const loginWithGoogle = () => {
     window.location.href = `${API_URL}/google`;
@@ -15,7 +15,7 @@ export const getUserProfile = async () => {
     }
 
     try {
-        const response = await axios.get("http://localhost:4123/api/auth/getUser", {
+        const response = await axios.get("https://the-alter-office.onrender.com/api/auth/getUser", {
             headers: { Authorization: token },
         });
         return response.data;

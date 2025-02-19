@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../apis/api";
 import { useAuth } from "../Context/AuthContext";
@@ -9,19 +9,8 @@ const Home = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      handleProfileSetup();
-    }
-  }, []);
-
-  const handleGoogleLogin = async () => {
-    setLoading(true);
-    window.location.href = "http://localhost:4123/api/auth/google";
-  };
-
-  const handleProfileSetup = async () => {
+  // Memoize the function to avoid triggering useEffect repeatedly
+  const handleProfileSetup = useCallback(async () => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
@@ -33,6 +22,19 @@ const Home = () => {
         setUser(null);
       }
     }
+  }, [setUser, navigate]); // Dependencies for useCallback
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      handleProfileSetup();
+    }
+  }, [handleProfileSetup]); // `handleProfileSetup` is memoized now
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    window.location.href =
+      "https://the-alter-office.onrender.com/api/auth/google";
   };
 
   const handleLogout = () => {
