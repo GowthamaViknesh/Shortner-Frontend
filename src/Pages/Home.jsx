@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getUserProfile } from "../apis/api";
 import { useAuth } from "../Context/AuthContext";
 import { Send } from "lucide-react";
@@ -7,35 +7,55 @@ import { Send } from "lucide-react";
 const Home = () => {
   const { user, setUser } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
 
-  const handleProfileSetup = useCallback(async () => {
-    const token = localStorage.getItem("token");
+  // ✅ Handle token from OAuth Redirect (Google Login)
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const token = urlParams.get("token");
+
     if (token) {
+      console.log("Token received:", token);
+      localStorage.setItem("token", token);
+      window.history.replaceState({}, document.title, "/"); // Remove token from URL
+      fetchUserProfile(token);
+    }
+  }, [location]);
+
+  // ✅ Fetch User Profile
+  const fetchUserProfile = useCallback(
+    async (token) => {
       try {
         const userData = await getUserProfile(token);
-        setUser(userData);
-        navigate("/dashboard");
+        if (userData) {
+          setUser(userData);
+          navigate("/dashboard", { replace: true });
+        }
       } catch (error) {
         console.error("Error fetching user profile", error);
         setUser(null);
       }
-    }
-  }, [setUser, navigate]);
+    },
+    [setUser, navigate]
+  );
 
+  // ✅ Auto-login if token is in localStorage
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      handleProfileSetup();
+      fetchUserProfile(token);
     }
-  }, [handleProfileSetup]);
+  }, [fetchUserProfile]);
 
-  const handleGoogleLogin = async () => {
+  // ✅ Handle Google Login
+  const handleGoogleLogin = () => {
     setLoading(true);
     window.location.href =
       "https://the-alter-office.onrender.com/api/auth/google";
   };
 
+  // ✅ Logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
