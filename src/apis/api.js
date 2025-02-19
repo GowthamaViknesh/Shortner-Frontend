@@ -13,7 +13,7 @@ export const getUserProfile = async () => {
     if (!token) return null;
 
     try {
-        const response = await axios.get(`${API_URL}/getUser`, {
+        const response = await axios.get(`https://the-alter-office.onrender.com/api/auth/getUser`, {
             headers: { Authorization: token },
             withCredentials: true,
         });
