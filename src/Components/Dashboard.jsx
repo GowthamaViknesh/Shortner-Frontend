@@ -35,12 +35,10 @@ const Dashboard = () => {
     navigate("/");
   };
 
-  // Toggle Profile Dropdown Efficiently
   const toggleProfileDropdown = useCallback(() => {
     setIsProfileOpen((prev) => !prev);
   }, []);
 
-  // Close Dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest("#profile-dropdown")) {
@@ -62,10 +60,8 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Top Navigation Bar */}
       <nav className="bg-white shadow-md fixed w-full z-10">
         <div className="px-4 py-3 flex justify-between items-center">
-          {/* Left side - Brand and Menu Toggle */}
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -76,7 +72,6 @@ const Dashboard = () => {
             <span className="text-xl font-bold text-blue-600">ShortnerApp</span>
           </div>
 
-          {/* Right side - Profile Dropdown */}
           <div className="relative">
             <button
               id="profile-dropdown"
@@ -102,7 +97,6 @@ const Dashboard = () => {
               <ChevronDown size={20} />
             </button>
 
-            {/* Profile Dropdown Menu */}
             {isProfileOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2">
                 <button className="w-full px-4 py-2 text-left flex items-center gap-2 hover:bg-gray-100">
@@ -121,8 +115,6 @@ const Dashboard = () => {
           </div>
         </div>
       </nav>
-
-      {/* Sidebar */}
       <aside
         className={`fixed left-0 top-0 mt-16 h-full bg-white shadow-lg transition-all duration-300 ${
           isSidebarOpen ? "w-64" : "w-0"
@@ -152,7 +144,6 @@ const Dashboard = () => {
         </div>
       </aside>
 
-      {/* Main Content */}
       <main
         className={`pt-20 min-h-screen transition-all duration-300 ${
           isSidebarOpen ? "ml-64" : "ml-0"

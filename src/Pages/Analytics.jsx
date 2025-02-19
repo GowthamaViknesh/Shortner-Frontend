@@ -89,7 +89,6 @@ const Analytics = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-8">
-        {/* Clicks Over Time */}
         <ChartCard title="Clicks Over Time">
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -120,7 +119,6 @@ const Analytics = () => {
           </div>
         </ChartCard>
 
-        {/* OS Distribution */}
         <ChartCard title="Operating System Distribution">
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -149,7 +147,6 @@ const Analytics = () => {
           </div>
         </ChartCard>
 
-        {/* Device Types */}
         <ChartCard title="Device Type Distribution">
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">

@@ -3,7 +3,6 @@ import Home from "./Pages/Home";
 import Dashboard from "./Components/Dashboard";
 import NotFound from "./Pages/NotFound";
 import { AuthProvider } from "./Context/AuthContext";
-// import { Auth } from "./Pages/Auth";
 import OverallDash from "./Pages/OverAllDash";
 import Analytics from "./Pages/Analytics";
 
@@ -12,7 +11,6 @@ function App() {
     <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/auth" element={<Auth />} /> */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/overall" element={<OverallDash />} />
         <Route path="/analytics" element={<Analytics />} />
