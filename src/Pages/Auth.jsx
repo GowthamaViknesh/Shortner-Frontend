@@ -9,24 +9,26 @@ export const Auth = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    console.log("urlParams", urlParams);
+    const urlParams = new URLSearchParams(location.search);
     const token = urlParams.get("token");
-    console.log("token", token);
+
     if (token) {
       localStorage.setItem("token", token);
-      window.history.replaceState({}, document.title, "/dashboard");
+
       async function fetchUserProfile() {
         try {
           const userData = await getUserProfile(token);
           setUser(userData);
-          navigate("/dashboard", { replace: true });
+          navigate("/dashboard", { replace: true }); // ✅ Navigate properly
         } catch (error) {
           console.error(error);
           setUser(null);
         }
       }
+
       fetchUserProfile();
+    } else {
+      navigate("/"); // If no token, go home
     }
   }, [location, navigate, setUser]);
 

@@ -10,20 +10,25 @@ export const loginWithGoogle = () => {
 export const getUserProfile = async () => {
     const token = localStorage.getItem("token");
 
-    if (!token) {
-        return null;
-    }
+    if (!token) return null;
 
     try {
-        const response = await axios.get("https://the-alter-office.onrender.com/api/auth/getUser", {
-            headers: { Authorization: token },
+        const response = await axios.get(`${API_URL}/getUser`, {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
         });
         return response.data;
     } catch (error) {
         console.error("Error fetching user profile:", error);
+
+        if (error.response?.status === 401) {
+            localStorage.removeItem("token");
+        }
+
         return null;
     }
 };
+
 
 export const createUrl = async (data) => {
     const token = localStorage.getItem("token");
