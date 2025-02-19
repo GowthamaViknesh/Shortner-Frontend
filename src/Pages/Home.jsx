@@ -9,7 +9,6 @@ const Home = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  // Memoize the function to avoid triggering useEffect repeatedly
   const handleProfileSetup = useCallback(async () => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -22,14 +21,14 @@ const Home = () => {
         setUser(null);
       }
     }
-  }, [setUser, navigate]); // Dependencies for useCallback
+  }, [setUser, navigate]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       handleProfileSetup();
     }
-  }, [handleProfileSetup]); // `handleProfileSetup` is memoized now
+  }, [handleProfileSetup]);
 
   const handleGoogleLogin = async () => {
     setLoading(true);

@@ -10,13 +10,9 @@ export const Auth = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-        console.log('urlParams',urlParams)
-
+    console.log("urlParams", urlParams);
     const token = urlParams.get("token");
-
-        console.log('token',token)
-
-
+    console.log("token", token);
     if (token) {
       localStorage.setItem("token", token);
       window.history.replaceState({}, document.title, "/dashboard");
@@ -24,7 +20,7 @@ export const Auth = () => {
         try {
           const userData = await getUserProfile(token);
           setUser(userData);
-          navigate("/dashboard");
+          navigate("/dashboard", { replace: true });
         } catch (error) {
           console.error(error);
           setUser(null);
