@@ -10,7 +10,12 @@ export const Auth = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+        console.log('urlParams',urlParams)
+
     const token = urlParams.get("token");
+
+        console.log('token',token)
+
 
     if (token) {
       localStorage.setItem("token", token);
