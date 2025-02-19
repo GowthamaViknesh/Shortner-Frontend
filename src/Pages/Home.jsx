@@ -10,7 +10,6 @@ const Home = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
 
-  // ✅ Handle token from OAuth Redirect (Google Login)
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const token = urlParams.get("token");
@@ -18,19 +17,19 @@ const Home = () => {
     if (token) {
       console.log("Token received:", token);
       localStorage.setItem("token", token);
-      window.history.replaceState({}, document.title, "/"); // Remove token from URL
+      window.history.replaceState({}, document.title, "/");
       fetchUserProfile(token);
     }
   }, [location]);
 
-  // ✅ Fetch User Profile
   const fetchUserProfile = useCallback(
     async (token) => {
+      console.log(token);
       try {
         const userData = await getUserProfile(token);
         if (userData) {
           setUser(userData);
-          navigate("/dashboard", { replace: true });
+          navigate("/dashboard");
         }
       } catch (error) {
         console.error("Error fetching user profile", error);
@@ -40,7 +39,6 @@ const Home = () => {
     [setUser, navigate]
   );
 
-  // ✅ Auto-login if token is in localStorage
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -48,14 +46,12 @@ const Home = () => {
     }
   }, [fetchUserProfile]);
 
-  // ✅ Handle Google Login
   const handleGoogleLogin = () => {
     setLoading(true);
     window.location.href =
       "https://the-alter-office.onrender.com/api/auth/google";
   };
 
-  // ✅ Logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
